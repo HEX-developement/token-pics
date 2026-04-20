@@ -1,0 +1,8 @@
+MULE
+
+0xaa46FA6cf4F81B087EC3A968946fb2E705c6B89E
+
+Token name : ナナナ The M.U.L.E.
+Symbol : MULE
+Decimals : 18
+

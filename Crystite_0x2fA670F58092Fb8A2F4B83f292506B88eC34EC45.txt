@@ -1,0 +1,8 @@
+Crystite
+
+0x2fA670F58092Fb8A2F4B83f292506B88eC34EC45
+
+Token name : ナナナ The M.U.L.E. Crystite 
+Symbol : Crystite
+Decimals : 18
+

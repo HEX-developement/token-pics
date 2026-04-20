@@ -1,0 +1,7 @@
+Smithore
+
+0x1B43c527564eC6c2C0e0f5A6C777895294f44BbD
+
+Token name : ナナナ The M.U.L.E. Smithore 
+Symbol : Smithore
+Decimals : 18
