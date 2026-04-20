@@ -6,3 +6,4 @@ Token name : ナナナ The M.U.L.E. Crystite
 Symbol : Crystite
 Decimals : 18
 
+https://raw.githubusercontent.com/HEX-developement/token-pics/57772a50b1b75495ae36db867e7cfb68c704601a/0x2fA670F58092Fb8A2F4B83f292506B88eC34EC45.png
