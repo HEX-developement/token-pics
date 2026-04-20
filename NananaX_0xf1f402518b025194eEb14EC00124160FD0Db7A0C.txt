@@ -6,3 +6,4 @@ Token name : ナナナ BananaX Republic
 Symbol : NananaX
 Decimals : 18
 
+https://raw.githubusercontent.com/HEX-developement/token-pics/79e0b2e3a8560f2fe7d0a9c858a93542f77897dd/0xf1f402518b025194eEb14EC00124160FD0Db7A0C.png
