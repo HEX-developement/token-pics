@@ -5,3 +5,5 @@ Smithore
 Token name : ナナナ The M.U.L.E. Smithore 
 Symbol : Smithore
 Decimals : 18
+
+https://raw.githubusercontent.com/HEX-developement/token-pics/57772a50b1b75495ae36db867e7cfb68c704601a/0x1B43c527564eC6c2C0e0f5A6C777895294f44BbD.png
