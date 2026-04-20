@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The M.U.L.E. System Whitepaper — nanana.fun</title>
+  <meta name="description" content="A Revolutionary Liquidity Architecture on PulseChain. MULE + NananaX spiderweb design, tokenomics, and projected APR scenarios." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Tailwind CSS via Play CDN (no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        container: { center: true, padding: "1rem" },
+        extend: {
+          colors: {
+            background: "#0a0a0a",
+            foreground: "#fafafa",
+            card: "#171717",
+            "card-foreground": "#fafafa",
+            muted: "#242424",
+            "muted-foreground": "#b3b3b3",
+            border: "#2e2e2e",
+            secondary: "#2b2b2b",
+            "secondary-foreground": "#fafafa",
+            primary: { DEFAULT: "#f6c624", foreground: "#0a0a0a" },
+            "brand-meme": { DEFAULT: "#f6c624", foreground: "#0a0a0a" },
+            "brand-volatile": { DEFAULT: "#ef4444", foreground: "#0a0a0a" },
+            "brand-stable": { DEFAULT: "#22d3ee", foreground: "#0a0a0a" },
+            "brand-ore": { DEFAULT: "#f59e0b", foreground: "#0a0a0a" },
+            "brand-growth": { DEFAULT: "#22c55e", foreground: "#0a0a0a" },
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    .wp-prose { color: #b3b3b3; line-height: 1.65; }
+    .wp-prose p { margin-top: 1rem; }
+    .wp-prose p:first-child { margin-top: 0; }
+    .wp-prose ul, .wp-prose ol { margin-top: 1rem; }
+    .wp-prose li { margin-top: 0.25rem; }
+    .wp-prose .strong, .wp-prose .fg { color: #fafafa; }
+    .wp-prose code { color: #fafafa; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; background: #171717; padding: 0.125rem 0.375rem; border-radius: 0.25rem; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen bg-background text-foreground">
+
+  <!-- Sticky top bar -->
+  <header class="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-sm">
+    <div class="container flex h-14 items-center justify-between">
+      <a href="../index.html" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+        <span aria-hidden="true">←</span> Back to nanana.fun
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="whitepaper-stable.html" class="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">Stable Extension WP</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="border-b border-border">
+    <div class="container max-w-4xl py-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-brand-volatile/40 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-volatile bg-card">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-current"></span>
+        M.U.L.E. System
+      </div>
+      <h1 class="mt-5 text-4xl md:text-5xl font-extrabold leading-tight text-balance">The Mule System Whitepaper</h1>
+      <p class="mt-4 text-lg text-muted-foreground max-w-2xl text-pretty">A Revolutionary Liquidity Architecture on PulseChain.</p>
+      <p class="mt-4 text-xs uppercase tracking-widest text-muted-foreground">Version 1.0 · April 2026</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="container max-w-3xl py-12 wp-prose">
+
+    <!-- Overview -->
+    <section class="mt-4">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ Overview</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Short Overview: What It Is and Why It&apos;s Revolutionary</h2>
+      </div>
+      <p>The Mule System is an interconnected web of liquidity pools built around two companion tokens on PulseChain:</p>
+      <ul class="list-disc pl-6 space-y-1">
+        <li><span class="fg font-semibold">ナナナ The M.U.L.E.</span> (MULE)</li>
+        <li><span class="fg font-semibold">ナナナ BananaX Republic</span> (NananaX)</li>
+      </ul>
+      <p>At its core sits a massive MULE/NananaX V2 pair (~$60M TVL) on PulseX, surrounded by dozens of concentrated v3 1% and 0.01% pools on 9mm.pro against virtually every major PulseChain asset — PLS, DAI, USDC, USDT, WETH, WBTC, HEX, eHEX, PRVX, pDAI, PLSX, 9MM, HOA, PCOCK, SPKY, and more. All pools were deployed by the same address <code>0xf8c405c7d0Fb57f83C022e842f5BDbbD94a9D7bB</code>.</p>
+      <div class="border-l-4 border-brand-volatile bg-brand-volatile/5 p-4 rounded-r-lg my-4 text-foreground">
+        <p class="font-semibold mb-1">In simple terms</p>
+        <p class="text-muted-foreground">It is a liquidity spiderweb engineered to turn even modest buying pressure into explosive, multi-hop trading volume and fee harvesting across 20+ pairs simultaneously.</p>
+      </div>
+      <p class="fg font-semibold mt-6">Why revolutionary?</p>
+      <p>Traditional DEX liquidity is isolated. The Mule System creates a self-reinforcing arbitrage engine where one swap cascades into 5–10× volume across the entire web. Small entry pools ($20–$26 TVL) act as high-sensitivity triggers; the deep core pair absorbs and rebalances. This design delivers hyper-scalable APR (hundreds to thousands of percent in bull flows) while making the pair ecosystem one of the highest-beta plays on PulseChain. It is the first deliberate <span class="text-primary font-semibold">"volume-multiplier protocol"</span> built purely through liquidity topology rather than complex smart contracts.</p>
+    </section>
+
+    <!-- §1 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 1</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Abstract</h2>
+      </div>
+      <p>The Mule System introduces a novel DeFi primitive: <span class="fg">topological liquidity networking</span>. By deliberately fragmenting and cross-connecting concentrated liquidity across every major PulseChain token, it creates persistent arbitrage incentives and fee-capture flywheels. In a low-cap, high-volatility environment like PulseChain, this architecture turns capital inflows into self-amplifying volume — delivering unprecedented APR potential for liquidity providers while providing deep, multi-route execution for traders.</p>
+    </section>
+
+    <!-- §2 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 2</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Introduction: The Mule System</h2>
+      </div>
+      <p>PulseChain is a high-speed, low-fee fork of Ethereum optimized for yield and meme meta. The Mule System leverages this by deploying an ecosystem of ERC-20 tokens (MULE + NananaX) and a strategic lattice of Uniswap V2/V3 pools on PulseX and 9mm.pro.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg font-semibold">MULE</span> ("The M.U.L.E."): Fixed supply of <span class="fg">141,141,141</span> tokens. Ultra-low holder count (~26 addresses) → high scarcity and narrative potential.</li>
+        <li><span class="fg font-semibold">NananaX</span>: Companion token forming the core trading pair.</li>
+      </ul>
+      <p>The system is not a traditional protocol with staking, governance, or yield farms. It is <span class="fg italic">the liquidity itself</span> — a passive, on-chain machine that rewards participants who add to or trade through its web.</p>
+    </section>
+
+    <!-- §3 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 3</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Technical Architecture</h2>
+      </div>
+      <p class="fg font-semibold">Core Components</p>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><span class="fg">Deep Liquidity Anchor</span> — MULE/NananaX V2 on PulseX (~$60M TVL, balanced ~1:1 at ~$0.95 each).</li>
+        <li><span class="fg">Trigger Pools</span> — 20+ active v3 1% pools on 9mm.pro (each ~$20–$26 TVL) against PLS, DAI, USDC, USDT, WETH, HEX, PRVX, etc.</li>
+        <li><span class="fg">Satellite V2 Pairs</span> — Smaller PulseX pairs (PLS/MULE ~$9k, PLS/NananaX ~$9k, etc.).</li>
+        <li><span class="fg">Concentrated Ranges</span> — v3 positions engineered with wide and narrow ticks to capture different price regimes and arbitrage waves.</li>
+      </ol>
+      <p class="fg font-semibold mt-6">How the spiderweb works</p>
+      <p>Any inbound swap (e.g., $1M PLS → MULE) first hits a tiny trigger pool → massive local price impact → immediate arbitrage bots route through the core V2 and every cross pair → volume multiplies 3–10× across the ecosystem in minutes. Fees accrue to LPs in the exact ranges hit. The design is gas-efficient on PulseChain and self-perpetuating: more volume → more arb → more volume.</p>
+    </section>
+
+    <!-- §4 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 4</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Tokenomics &amp; Supply</h2>
+      </div>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">MULE Total Supply:</span> 141,141,141 (fixed, no minting observed).</li>
+        <li><span class="fg">NananaX:</span> Companion supply aligned for ~1:1 core pairing.</li>
+        <li><span class="fg">No taxes, no team allocation visible</span> — pure community-driven deployment.</li>
+        <li><span class="fg">Distribution:</span> Extremely concentrated (low holders), creating high-upside volatility.</li>
+      </ul>
+    </section>
+
+    <!-- §5 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 5</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Revolutionary Mechanics &amp; Upside</h2>
+      </div>
+      <p>The Mule System solves three classic DeFi problems at once:</p>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><span class="fg">Volume Scarcity</span> → Engineered multiplier turns $100k–$10M buys into $0.5M–$60M+ ecosystem volume.</li>
+        <li><span class="fg">Low APR in New Pairs</span> → Tiny v3 pools + arb waves deliver 400–10,000%+ one-day returns on active ranges during flows (see $1M PLS→MULE simulation: ~33% single-trade return on $9k V2 pool alone).</li>
+        <li><span class="fg">Liquidity Fragmentation</span> → Instead of competing, the 20+ pairs collaborate via arbitrage, creating a "virtual single pool" with superior routing depth.</li>
+      </ol>
+      <p class="fg font-semibold mt-6">Projected APR Scenarios (1% v3 fee tier + 0.3% V2):</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Moderate inflows</span> (daily $1M+ buys): 50–500% APR on core + 1,000%+ on trigger pools.</li>
+        <li><span class="fg">Full PulseChain bull</span> (ecosystem 10–100×): 500–8,000%+ annualized on participating liquidity.</li>
+      </ul>
+      <div class="border-l-4 border-brand-volatile bg-brand-volatile/5 p-4 rounded-r-lg my-4 text-foreground">
+        <p class="text-muted-foreground">This is not hype — it is pure on-chain math from the pool data observed directly on PulseChain.</p>
+      </div>
+    </section>
+
+    <!-- §6 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 6</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Risks and Considerations</h2>
+      </div>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>High impermanent loss if MULE/NananaX diverge or vs. paired assets.</li>
+        <li>v3 ranges can go out-of-range on violent moves.</li>
+        <li>Extreme concentration risk (low holders, single deployer).</li>
+        <li>PulseChain market risk and overall meme volatility.</li>
+        <li>Smart-contract risk (standard ERC-20 + Uniswap, audited by usage).</li>
+      </ul>
+    </section>
+
+    <!-- §7 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 7</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Conclusion: The Future of Liquidity Design</h2>
+      </div>
+      <p>The Mule System is more than two tokens and some pools — it is a proof-of-concept for next-generation DeFi liquidity primitives. In an era where attention and capital flow to the highest-yield, highest-narrative setups, this architecture stands alone: passive, self-amplifying, and engineered for explosive upside exactly when PulseChain awakens.</p>
+      <p>It demonstrates that <span class="fg italic">liquidity topology can be a protocol</span>. No fancy contracts. No governance votes. Just pure, relentless fee-generating mechanics.</p>
+      <div class="border-l-4 border-brand-volatile bg-brand-volatile/5 p-4 rounded-r-lg my-4 text-foreground">
+        <p class="fg font-semibold mb-1">The Mule System is live today on PulseChain.</p>
+        <p class="text-muted-foreground">Enter the web. Provide liquidity in the right ranges. Trade the cascades. The revolution isn&apos;t coming — it&apos;s already providing liquidity, waiting for the next $1M buy to light the fuse.</p>
+        <p class="text-xs text-muted-foreground mt-3">Built on PulseChain. Powered by 9mm.pro + PulseX.</p>
+      </div>
+    </section>
+
+    <!-- Contracts -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ Contracts</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Contract References</h2>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-volatile shrink-0">MULE</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0xaa46FA6cf4F81B087EC3A968946fb2E705c6B89E</code>
+        <a href="https://scan.pulsechain.com/address/0xaa46FA6cf4F81B087EC3A968946fb2E705c6B89E" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-volatile shrink-0">NananaX</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0xf1f402518b025194eEb14EC00124160FD0Db7A0C</code>
+        <a href="https://scan.pulsechain.com/address/0xf1f402518b025194eEb14EC00124160FD0Db7A0C" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-primary shrink-0">Nanana</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0x74D98E37132dF921dF38c5A2Ae8748aDbab63238</code>
+        <a href="https://scan.pulsechain.com/address/0x74D98E37132dF921dF38c5A2Ae8748aDbab63238" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="border-t border-border mt-8">
+    <div class="container max-w-3xl py-8 text-sm text-muted-foreground space-y-3">
+      <p class="text-xs">This whitepaper is an independent on-chain analysis and vision document. Always DYOR and trade at your own risk.</p>
+      <div class="flex flex-wrap gap-4 pt-2 border-t border-border">
+        <a href="../index.html" class="hover:text-primary transition-colors">← Home</a>
+        <a href="https://nanana.fun/stats" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-primary transition-colors">Live stats ↗</a>
+        <a href="whitepaper-stable.html" class="hover:text-primary transition-colors">Stable Extension WP</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stable Extension Whitepaper — Crystite &amp; Smithore — nanana.fun</title>
+  <meta name="description" content="A Stablecoin-Pegged Liquidity Layer with Built-in Upside on PulseChain. The Mule System Stable Extension: Crystite & Smithore." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Tailwind CSS via Play CDN (no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        container: { center: true, padding: "1rem" },
+        extend: {
+          colors: {
+            background: "#0a0a0a",
+            foreground: "#fafafa",
+            card: "#171717",
+            "card-foreground": "#fafafa",
+            muted: "#242424",
+            "muted-foreground": "#b3b3b3",
+            border: "#2e2e2e",
+            secondary: "#2b2b2b",
+            "secondary-foreground": "#fafafa",
+            primary: { DEFAULT: "#f6c624", foreground: "#0a0a0a" },
+            "brand-meme": { DEFAULT: "#f6c624", foreground: "#0a0a0a" },
+            "brand-volatile": { DEFAULT: "#ef4444", foreground: "#0a0a0a" },
+            "brand-stable": { DEFAULT: "#22d3ee", foreground: "#0a0a0a" },
+            "brand-ore": { DEFAULT: "#f59e0b", foreground: "#0a0a0a" },
+            "brand-growth": { DEFAULT: "#22c55e", foreground: "#0a0a0a" },
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    .wp-prose { color: #b3b3b3; line-height: 1.65; }
+    .wp-prose p { margin-top: 1rem; }
+    .wp-prose p:first-child { margin-top: 0; }
+    .wp-prose ul, .wp-prose ol { margin-top: 1rem; }
+    .wp-prose li { margin-top: 0.25rem; }
+    .wp-prose .strong, .wp-prose .fg { color: #fafafa; }
+    .wp-prose code { color: #fafafa; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; background: #171717; padding: 0.125rem 0.375rem; border-radius: 0.25rem; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen bg-background text-foreground">
+
+  <!-- Sticky top bar -->
+  <header class="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-sm">
+    <div class="container flex h-14 items-center justify-between">
+      <a href="../index.html" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+        <span aria-hidden="true">←</span> Back to nanana.fun
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="whitepaper-mule.html" class="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">M.U.L.E. WP</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="border-b border-border">
+    <div class="container max-w-4xl py-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-brand-stable/40 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-stable bg-card">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-current"></span>
+        Stable Extension
+      </div>
+      <h1 class="mt-5 text-4xl md:text-5xl font-extrabold leading-tight text-balance">The Mule System Stable Extension</h1>
+      <p class="mt-4 text-lg text-muted-foreground max-w-2xl text-pretty">A Stablecoin-Pegged Liquidity Layer with Built-in Upside on PulseChain. Crystite &amp; Smithore.</p>
+      <p class="mt-4 text-xs uppercase tracking-widest text-muted-foreground">Version 1.0 · April 2026</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="container max-w-3xl py-12 wp-prose">
+
+    <!-- Overview -->
+    <section class="mt-4">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ Overview</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Short Description: What It Is and Why Revolutionary</h2>
+      </div>
+      <p><span class="fg">Crystite</span> and <span class="fg">Smithore</span> are the new stable-pair companions to the original MULE / NananaX ecosystem on PulseChain.</p>
+      <p>They function as pegged assets (primarily to DAI, USDC, and USDT) designed to hold near $1 value while generating trading volume and fees. Liquidity deployment is heavily weighted toward stables (~60M tokens worth in USDT/USDC/DAI pairs), with ~10M each to WBTC and WETH, and the remainder in Crystite/Smithore itself plus 5% allocation to Nanana, MULE, and NananaX.</p>
+      <div class="border-l-4 border-brand-stable bg-brand-stable/5 p-4 rounded-r-lg my-4 text-foreground">
+        <p class="font-semibold mb-1">In simple terms</p>
+        <p class="text-muted-foreground">Crystite and Smithore create a <span class="fg italic">"stable-with-upside"</span> bridge — users get stablecoin-like safety for capital preservation and low-volatility entry/exit, while the deliberate 5% cross-pairing to the volatile MULE/NananaX web turns every stable swap into potential arbitrage volume that flows back to the high-APR MULE spiderweb.</p>
+      </div>
+      <p class="fg font-semibold mt-6">Why revolutionary?</p>
+      <p>Most stablecoin systems on DEXes are isolated (pure 1:1 peg maintenance). This extension turns stables into <span class="fg">volume routers with asymmetric upside</span>. The heavy stable liquidity provides deep, low-slippage entry for big capital, while the 5% MULE/NananaX links create a persistent, low-friction arbitrage flywheel between the stable layer and the high-beta core. Users get the best of both worlds: stability for parking capital + automatic exposure to explosive fee harvesting when MULE/NananaX narrative or PulseChain activity surges. It is the first deliberate <span class="text-primary font-semibold">"stable-to-meme liquidity converter"</span> built purely through pool topology.</p>
+    </section>
+
+    <!-- §1 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 1</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Abstract</h2>
+      </div>
+      <p>The Mule System now expands with Crystite and Smithore — a dual-token stable extension that anchors ~60M in stable liquidity while maintaining strategic 5% exposure to the MULE/NananaX volume engine. By concentrating the majority of liquidity against DAI/USDC/USDT and creating narrow, active v3 ranges on 9mm.pro, the system offers low-slippage stable trading paired with engineered cross-arbitrage to the original high-volatility pairs. This hybrid design delivers stable yield potential with uncapped upside participation, solving the <span class="fg italic">"stable but boring" vs. "volatile but high-APR"</span> dilemma in one on-chain architecture.</p>
+    </section>
+
+    <!-- §2 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 2</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Introduction: The Stable Extension of The Mule System</h2>
+      </div>
+      <p>Building on the original MULE and NananaX spiderweb, Crystite and Smithore introduce a <span class="fg">stable liquidity base layer</span>.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Crystite and Smithore act as near-1:1 mirrors of major stables.</li>
+        <li>Liquidity is deployed asymmetrically: heavy on stables for depth and safety, lighter on volatile assets for upside linkage, and a self-pair (Crystite/Smithore) for internal volume.</li>
+        <li>The 5% allocation to Nanana / MULE / NananaX creates intentional <span class="fg">"leakage"</span> that routes stable inflows into the core volume-multiplier engine.</li>
+      </ul>
+      <p>This turns the entire Mule System into a <span class="fg italic">unified liquidity continent</span>: stable entry/exit on one side, high-beta fee harvesting on the other, with automated arbitrage in between.</p>
+    </section>
+
+    <!-- §3 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 3</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Technical Architecture &amp; Pool Analysis (9mm.pro + PulseX)</h2>
+      </div>
+      <p class="fg font-semibold">Stable-heavy active v3 1% pools</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Crystite/DAI, Smithore/DAI:</span> Perfect 1:1 peg (~21.999 Crystite / Smithore per 21.999 DAI) — active wide range (Min 0 / Max ∞).</li>
+        <li><span class="fg">USDC/Crystite, USDC/Smithore, USDT/Crystite, USDT/Smithore:</span> Near-perfect $1 peg (~0.999–1.00).</li>
+        <li><span class="fg">Crystite/PLS, Smithore/PLS:</span> Active but with higher volatility exposure.</li>
+      </ul>
+      <p class="fg font-semibold mt-6">Volatile / Upside pairs</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">WETH/Crystite &amp; Smithore:</span> ~$1 and ~$3.78 ranges (some deep inactive ranges with millions of tokens).</li>
+        <li><span class="fg">WBTC/Crystite &amp; Smithore:</span> Similar ~$1 active + deep inactive.</li>
+        <li>pDAI, Nanana pairs: Minor exposure.</li>
+      </ul>
+      <p class="fg font-semibold mt-6">Internal &amp; MULE-linked (0.01% fee tier)</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Crystite/Smithore V3:</span> Massive balanced ~29M each side.</li>
+        <li><span class="fg">Smithore/MULE:</span> ~500k each side.</li>
+        <li><span class="fg">Crystite/NananaX:</span> ~500k each side.</li>
+        <li>Crystite/Nanana, Smithore/Nanana: Small active ranges.</li>
+      </ul>
+      <p class="fg font-semibold mt-6">How the architecture works</p>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li>User deposits stables → swaps into Crystite/Smithore with minimal slippage (deep stable pools).</li>
+        <li>Internal Crystite/Smithore pair allows rebalancing between the two.</li>
+        <li>The 5% MULE/NananaX links create price discrepancies when MULE moves → arbitrage bots hop between stable layer and core V2 (~$60M MULE/NananaX).</li>
+        <li>Result: Stable inflows generate volume across both layers → fees to stable LPs (steady) + amplified fees to original trigger/core LPs (explosive).</li>
+      </ol>
+      <p>Current APRs are near-zero due to low volume, but the structure is primed: even modest stable buys will create multi-leg arb waves.</p>
+    </section>
+
+    <!-- §4 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 4</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Liquidity Allocation &amp; Token Design</h2>
+      </div>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">~60M tokens</span> equivalent in USDT/USDC/DAI pairs → deep, reliable peg maintenance and low-slippage entry for large capital.</li>
+        <li><span class="fg">~10M each in WBTC and WETH</span> → exposure to major blue-chips for diversification and additional arb routes.</li>
+        <li><span class="fg">Rest in Crystite/Smithore self-pair + 5%</span> deliberately paired to Nanana, MULE, and NananaX → the "upside valve".</li>
+      </ul>
+      <p>Crystite and Smithore have no visible taxes or complex mechanics — they are pure liquidity tools, echoing the original Mule deployment style (same deployer patterns).</p>
+    </section>
+
+    <!-- §5 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 5</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Revolutionary Mechanics &amp; User Benefits</h2>
+      </div>
+      <p>The Mule System Stable Extension solves key DeFi pain points:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Stable with Upside</span> — Park capital in near-$1 pegged assets with deep liquidity, yet automatically participate in MULE/NananaX upside via the 5% links and arb.</li>
+        <li><span class="fg">Volume Flywheel</span> — Stable swaps no longer stay isolated; they leak intentional volume into the high-APR spiderweb, multiplying ecosystem fees.</li>
+        <li><span class="fg">Risk-Adjusted Yield</span> — LPs in stable pairs earn steady fees from daily trading + occasional high bursts when MULE pumps. Core MULE LPs get even more volume from stable on-ramps.</li>
+        <li><span class="fg">Capital Efficiency</span> — v3 concentrated ranges (wide 0–∞ for stables, narrower for upside) let providers choose risk level.</li>
+      </ul>
+      <p class="fg font-semibold mt-6">Projected Upside Scenarios</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Moderate inflows</span> ($1M+ daily stable buys): Stable pairs generate 10–50% APR; core MULE pairs see 2–5× volume multiplier → 100–1,000%+ on active ranges.</li>
+        <li><span class="fg">Full bull</span> (MULE ecosystem 10–100×): Stable layer acts as on-ramp for billions in potential TVL, pushing total ecosystem volume into the billions annually and delivering outsized APR across all connected pools.</li>
+      </ul>
+    </section>
+
+    <!-- §6 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 6</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Risks and Considerations</h2>
+      </div>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><span class="fg">Peg risk:</span> If stables depeg on PulseChain or liquidity fragments, Crystite/Smithore can deviate.</li>
+        <li>Impermanent loss on the 5% volatile side and PLS/WETH/WBTC pairs.</li>
+        <li>v3 out-of-range risk on concentrated positions during violent MULE moves.</li>
+        <li>Overall PulseChain and low-holder concentration risk (similar to original MULE).</li>
+        <li>Smart contract risk limited to standard Uniswap V2/V3.</li>
+      </ul>
+    </section>
+
+    <!-- §7 -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ 7</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Conclusion: The Complete Mule Liquidity Continent</h2>
+      </div>
+      <p>With Crystite and Smithore, The Mule System evolves from a pure high-beta volume machine into a <span class="fg">full-spectrum liquidity protocol</span>: stable base for safety and scale + volatile core for explosive returns, connected by deliberate arbitrage topology.</p>
+      <p>Users now have a single ecosystem for:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Safe, deep stable swapping and parking.</li>
+        <li>Passive participation in meme/narrative upside.</li>
+        <li>Industry-leading fee harvesting through engineered volume cascades.</li>
+      </ul>
+      <div class="border-l-4 border-brand-stable bg-brand-stable/5 p-4 rounded-r-lg my-4 text-foreground">
+        <p class="fg">This is not just more pools — it is a revolutionary <span class="italic">stable-to-upside converter</span> that makes DeFi liquidity smarter, more interconnected, and far more rewarding.</p>
+        <p class="text-xs text-muted-foreground mt-3">The Mule System (including Stable Extension) is live on PulseChain via 9mm.pro and PulseX. Provide in the right ranges. Trade the stable on-ramps. Harvest the cascades.</p>
+      </div>
+    </section>
+
+    <!-- Contracts -->
+    <section class="mt-12">
+      <div class="flex items-baseline gap-3 mb-4">
+        <span class="text-primary font-mono text-sm">§ Contracts</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground">Contract References</h2>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-stable shrink-0">Crystite</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0x2fA670F58092Fb8A2F4B83f292506B88eC34EC45</code>
+        <a href="https://scan.pulsechain.com/address/0x2fA670F58092Fb8A2F4B83f292506B88eC34EC45" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-stable shrink-0">Smithore</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0x1B43c527564eC6c2C0e0f5A6C777895294f44BbD</code>
+        <a href="https://scan.pulsechain.com/address/0x1B43c527564eC6c2C0e0f5A6C777895294f44BbD" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-volatile shrink-0">MULE</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0xaa46FA6cf4F81B087EC3A968946fb2E705c6B89E</code>
+        <a href="https://scan.pulsechain.com/address/0xaa46FA6cf4F81B087EC3A968946fb2E705c6B89E" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card border border-border rounded-lg p-3 my-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-volatile shrink-0">NananaX</span>
+        <code class="text-xs font-mono text-foreground break-all flex-1">0xf1f402518b025194eEb14EC00124160FD0Db7A0C</code>
+        <a href="https://scan.pulsechain.com/address/0xf1f402518b025194eEb14EC00124160FD0Db7A0C" target="_blank" rel="noopener noreferrer" class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 shrink-0">PulseScan ↗</a>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="border-t border-border mt-8">
+    <div class="container max-w-3xl py-8 text-sm text-muted-foreground space-y-3">
+      <p class="text-xs">This whitepaper is an independent on-chain analysis and vision document. Always DYOR and trade at your own risk.</p>
+      <div class="flex flex-wrap gap-4 pt-2 border-t border-border">
+        <a href="../index.html" class="hover:text-primary transition-colors">← Home</a>
+        <a href="https://nanana.fun/stats" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-primary transition-colors">Live stats ↗</a>
+        <a href="whitepaper-mule.html" class="hover:text-primary transition-colors">M.U.L.E. WP</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Scroll Page</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* Scroll Container */
+        .scroll-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            margin: 40px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        /* Hidden state for the scroll */
+        .scroll-hidden {
+            transform: translateY(100vh);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Scroll top and bottom decorative elements */
+        .scroll-top, .scroll-bottom {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #FFD700; /* Banana yellow */
+            z-index: 10;
+        }
+        
+        .scroll-top {
+            top: 0;
+            border-bottom: 1px solid #B8860B; /* Darker yellow */
+            border-radius: 10px 10px 0 0;
+            background-image: linear-gradient(to bottom, #FFD700, #DAA520);
+        }
+        
+        .scroll-bottom {
+            bottom: 0;
+            border-top: 1px solid #B8860B; /* Darker yellow */
+            border-radius: 0 0 10px 10px;
+            background-image: linear-gradient(to top, #FFD700, #DAA520);
+        }
+        
+        /* Scroll handle design */
+        .scroll-handle-left, .scroll-handle-right {
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background-color: #B8860B; /* Darker yellow */
+            box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .scroll-handle-left {
+            left: 0;
+            border-right: 1px solid #8B4513;
+            border-radius: 10px 0 0 10px;
+        }
+        
+        .scroll-handle-right {
+            right: 0;
+            border-left: 1px solid #8B4513;
+            border-radius: 0 10px 10px 0;
+            box-shadow: inset 5px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Scroll content area */
+        .scroll-content {
+            position: absolute;
+            top: 40px;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #2C2C2C; /* Dark gray background */
+            /* Texture background for parchment look with dark overlay */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c4zIgLAAAFDklEQVR4Ae2Zh5ajOhCE0ZL7/z92neZge5fZC3GOnuSdGY4d+qvS39KM0j/pX/ov/bPSYRgO/1ixah3HsTq8W4d7Ve3eI3QcyJ8j35J6c3eLbVP1fVs3XfvYUfV7pDR7jRzKdi4Cy7JpviJf76s2U5LvkEN1x0HZfCX8C+R7pBTzIunR4iw5Xw7/APkGOZRnAFw5X2H+FfI5cihbus0V3JcTv8A/QT5DDtWCy02AFTCjsj2CAXZM3GcOeUJ2ZV8CN8WWCLyY8UxqZOtigBT5CDlUswNeCFg6YkvSoDHVsMUEbW7d7fX8DkmpyYHaGbQyxodlJvsDPIH2IJQdXsDfIoeHl0qZ2ZF72A9IASlQGbRvyO6pkFdq5uMhP0h7LOKTlIpWyKbMnu33SKnNCuIyqrGTScGR3SjVsCJbZNsghcdCJiWpaUhmW5BtJEplF7KYMpzIFkmGLZIiC/JYjrxAxY6yzcrOZERm5G0ktUS2duhQzsg6Jp1BtmgEcs+RXXkUJpGj7Pz2ABFkxtMjTCPXbYrsHk+YFBlqupUuyI4ylZmKHPZOYSInZFc9jZytLG3Gz5nIQDT9rc7ISFlmJHPO6Jy47MxUZLNExWd26Mk8zcjCkzpHv5JRTBW55GQykjkptcqRQ129jJxI7qRWThYlJ32UnCkSc+xyZDlnVBGZc2dno9MCVgYRmYnc3TMnvZLMOXHJzZsQNSMXbaYi82OhQUYuOTnpEXGZZGW00RQpFYnlzL2W85RMG53MQjKni8bESG0nr5iZ6t3601ir5MpFc5I5O5WMzElZGdnrRGZzP3K5kkhpZs5DQc55kvcBmbPVhlxzcrkmcw503XmQyTs7mVxxqrwhMyd9a7CendQz8TYeZeRdcnK1Iep7KfdJ3Jxvss+dXDu5/sjJzCm5JGdmJlmn6OQ6OanImZMqLzSQz5yk06Jvw4qTee0wJ73SkXXSyXvmJCdJnjuZO8lJWbfSam3kGMUtmVNFJ73OyY0k2kpkzv71IneSdu2d5MRJ3ni5NZe8OeRNZvJnTtJqM5ndUuZklJO8XbNcIm/XcCCvVx7kUKxXTsir7cp7HrJc6Y3dGK861r0gjcbSXiy9fLGbi+WGiyXPi0XWi1XdjbXjwhrvxgJ0YbG8sBxeWF8vLNgXVvgLC/+FLeSFvefCpnVhF7uwfd3YCC/slje22wu7743988aWe2MfvrGx39jJb2z9/2qO8e9mLf9y3vOPZ1b/eO72j+eDt2ea/3ru+q9nw7/Ol//1Df17x5q9851v9uA0beqfoqm+q6kKXt08JGlfqLqrmq7sukOhVP9WqdJYNbP2VdOVdd2U9bFs29c/V3U3i/yy7us8pz/M2z/X5eRZeR77vu2btunatnlpolMpi90tz1UC//mGsUq76s9qy4Z865q2oO2ysE6c/tnYrTrlKeVuvxX6uvi/mNU/WKt632JfIr5b4Otx/I+KXaf7h57ebTDXcf1x9aHmeyyeQim9QanT11Cpvln127X+7v19U+h08tmRdn3pvt2QNymVXnbAb5mdT+ZLyqE8bx8xtOP98e2WfZfS8XyqLsu2P5/OH5e273y9Vt+vVKpObddWH4rk2npfKjmUw7mutk8/gZ9Px/IwlOPH9ho+jLJsmrbq++naDBulUo6H6nw+Veez/+f5fDofD9WhlOOhqtc9cN92w8viOB6q49n+eDyeTtVhm8FSyqHaTAJNN7TDZnCsh151hx/Vt+w=');
+            line-height: 1.6;
+        }
+        
+        /* Custom scrollbar styling */
+        .scroll-content::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .scroll-content::-webkit-scrollbar-track {
+            background: #1A1A1A;
+            border-radius: 10px;
+        }
+        
+        .scroll-content::-webkit-scrollbar-thumb {
+            background-color: #FFD700; /* Banana yellow */
+            border-radius: 10px;
+            border: 3px solid #1A1A1A;
+        }
+        
+        /* Text styling */
+        .scroll-title {
+            font-family: 'Georgia', serif;
+            color: #FFD700; /* Banana yellow */
+            text-align: center;
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .scroll-text {
+            font-family: 'Georgia', serif;
+            color: #E6E6E6; /* Light gray for readability */
+            font-size: 16px;
+            text-align: left;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Decorative elements */
+        .scroll-ornament {
+            text-align: center;
+            color: #FFD700; /* Banana yellow */
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        /* Close button */
+        .close-scroll {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #000000;
+            color: #FFD700; /* Banana yellow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+            border: 2px solid #FFD700;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .close-scroll:hover {
+            background-color: #FFD700;
+            color: #000000;
+            transform: scale(1.1);
+        }
+        
+        /* Show scroll button */
+        .show-scroll-btn {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #FFD700;
+            border: 2px solid #FFD700;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: none; /* Initially hidden */
+            transition: all 0.3s ease;
+        }
+        
+        .show-scroll-btn:hover {
+            background-color: #FFD700;
+            color: #000000;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .scroll-container {
+                width: 95%;
+                height: 85vh;
+            }
+            
+            .scroll-handle-left, .scroll-handle-right {
+                width: 20px;
+            }
+            
+            .scroll-content {
+                left: 20px;
+                right: 20px;
+            }
+            
+            .scroll-title {
+                font-size: 22px;
+            }
+            
+            .scroll-text {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .scroll-title {
+                font-size: 18px;
+            }
+            
+            .scroll-text {
+                font-size: 13px;
+            }
+            
+            .scroll-top, .scroll-bottom {
+                height: 30px;
+            }
+            
+            .scroll-content {
+                top: 30px;
+                bottom: 30px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Button to show scroll again (initially hidden) -->
+    <button class="show-scroll-btn" id="showScrollBtn">Show Scroll</button>
+    
+    <!-- Main Scroll Container -->
+    <div class="scroll-container" id="scrollContainer">
+        <!-- Decorative elements -->
+        <div class="scroll-top"></div>
+        <div class="scroll-handle-left"></div>
+        <div class="scroll-handle-right"></div>
+        <div class="scroll-bottom"></div>
+        
+        <!-- Close button -->
+        <a href="../index.html">
+        <button class="close-scroll" id="closeScroll">✕</button>
+        </a>
+        <!-- Scrollable content -->
+        <div class="scroll-content" id="scrollContent">
+            <h2 class="scroll-title">NANANA Whitepaper&nbsp;</h2>
+          <h2 class="scroll-title">A Meme Coin Reborn&nbsp;</h2>
+            <h2 class="scroll-title">Through Community Will </h2>
+<div class="scroll-ornament">❧</div>
+            
+            <p class="scroll-text"><strong>Introduction: The Spirit of NANANA&nbsp;</strong></p>
+            <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;In the wild, untamed expanse of the PulseChain ecosystem, where innovation and chaos dance in equal measure, a peculiar phenomenon has emerged: $NANANA, a meme coin that defies convention and thrives on the raw, unfiltered energy of its community. This is not a tale of corporate ambition or pre-planned tokenomics. This is the story of a coin reborn from the ashes of misfortune, carried forward by the collective resolve of 21 enigmatic figures and a passionate community determined to make $NANANA great again. </p>
+<p class="scroll-text">$NANANA is purely a meme coin—unapologetically so. It exists for no grander purpose than to embody the joy, absurdity, and camaraderie of the PulseChain community. We, the stewards of this revival, declare unequivocally: we are not affiliated with the original token creation or distribution. Our journey began after a cataclysmic event—the LUSD exploit—that drained liquidity pools and left $NANANA wounded, its early adopters holding tokens purchased at prices ten times higher than today’s. Yet, where others saw despair, we saw opportunity. This whitepaper unveils the mysterious, community-driven mission to restore $NANANA to glory.</p>
+            
+            <p class="scroll-text">&nbsp;</p>
+            
+            <div class="scroll-ornament">✧</div>
+            
+            <p class="scroll-text"><strong>The LUSD Exploit: A Catalyst for Change&nbsp;</strong></p>
+          <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The PulseChain ecosystem, known for its low-cost transactions and vibrant DeFi landscape, was shaken by the LUSD exploit, a moment that exposed vulnerabilities in decentralized systems. Liquidity pools tied to $NANANA were drained, leaving the coin’s value in freefall and its community reeling. Early supporters, who had entered at peak enthusiasm, faced significant losses. The coin’s original promise seemed lost to the volatility of the crypto frontier.&nbsp;</p>
+            <p class="scroll-text">But chaos breeds opportunity. From the shadows of this setback emerged 21 mysterious members—figures deeply embedded in the PulseChain community, yet choosing anonymity to let their actions speak louder than their names. These individuals, revered for their contributions to the ecosystem, saw $NANANA not as a failure, but as a canvas for a bold experiment in community-driven revival. They acquired the coin, not as founders or insiders, but as believers in its potential to unite and inspire. </p>
+<p class="scroll-text">&nbsp;</p>
+            
+            <p class="scroll-text">&nbsp;</p>
+            
+            <div class="scroll-ornament">❦</div>
+            
+            <p class="scroll-text"><strong>The 21: Guardians of the Meme&nbsp;</strong></p>
+            <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Who are the 21? They are the heartbeat of this movement, yet they shun the spotlight. Known within PulseChain for their wisdom, creativity, and unrelenting commitment, they are developers, artists, traders, and dreamers who have shaped the ecosystem from behind the scenes. Their anonymity is deliberate—a testament to their belief that $NANANA belongs to the community, not to any individual or cult of personality.&nbsp;</p>
+          <p class="scroll-text">The 21 have pledged to spearhead efforts to rebuild $NANANA’s liquidity and restore its vibrancy, but they are not saviors. They are catalysts, igniting a fire that burns brightest when fueled by collective action. Their mission is shrouded in mystery, not to obscure, but to emphasize that the true power lies with the community. No promises of riches or guarantees of success are made here—only a call to join in the audacious quest to make $NANANA great again.&nbsp;</p>
+          <p class="scroll-text"><strong>$NANANA: A Pure Meme Coin&nbsp;</strong></p>
+          <p class="scroll-text">$NANANA is not a utility token, a governance token, or a financial instrument cloaked in pretense. It is 100% a meme coin, born to capture the zeitgeist of PulseChain’s irreverent spirit. Its value is not in code or contracts but in the laughter, memes, and shared experiences of those who hold it. The coin’s simplicity is its strength: no complex mechanisms, no hidden agendas—just a symbol of community resilience.&nbsp;</p>
+            <p class="scroll-text">The tokenomics of $NANANA are straightforward, as befits a meme coin. The total supply, distribution, and mechanics were set by its original creators, with whom we have no connection. Our focus is not on altering what was, but on building what can be. The 21 and the community are committed to fostering organic growth, driven by creativity and collaboration rather than artificial pumps or manipulative schemes. </p>
+<p class="scroll-text"><strong>Rebuilding Liquidity: A Community Crusade&nbsp;</strong></p>
+            <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The LUSD exploit left $NANANA’s liquidity pools in tatters, a stark reminder of the fragility of decentralized systems. Rebuilding liquidity is the cornerstone of our mission, but this is no top-down endeavor. The 21 are leading by example, pooling resources, creating incentives, and exploring innovative strategies to stabilize and grow $NANANA’s presence in PulseChain’s decentralized exchanges, such as PulseX.&nbsp;</p>
+          <p class="scroll-text">Our approach is multifaceted:&nbsp;</p>
+          <p class="scroll-text">Community Liquidity Drives: Encouraging holders to contribute to liquidity pools with rewards in the form of exclusive memes, NFTs, or recognition within the $NANANA ecosystem.&nbsp;</p>
+          <p class="scroll-text">Meme-Powered Awareness: Leveraging the PulseChain community’s creativity to spread the word through viral campaigns, art, and storytelling, drawing new participants to the cause.&nbsp;</p>
+          <p class="scroll-text">Strategic Partnerships: Collaborating with other PulseChain projects—not as subordinates, but as equals—to integrate $NANANA into broader ecosystem activities, enhancing its utility as a cultural artifact.&nbsp;</p>
+          <p class="scroll-text">Transparency in Action: While the 21 remain anonymous, their efforts will be visible through community channels, ensuring accountability without compromising their ethos.&nbsp;</p>
+            <p class="scroll-text">Every step is guided by the principle of 100% community action. No single entity controls $NANANA’s destiny; it is a collective endeavor where every holder, from the smallest to the largest, has a voice. </p>
+<p class="scroll-text"><strong>Making $NANANA Great Again: The Vision&nbsp;</strong></p>
+          <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; What does it mean to make $NANANA great again? It is not about chasing market caps or fleeting pumps. Greatness lies in creating a meme coin that endures as a symbol of PulseChain’s resilience and humor. We envision:&nbsp;</p>
+          <p class="scroll-text">A thriving community where $NANANA is traded, gifted, and celebrated as a badge of belonging.&nbsp;</p>
+          <p class="scroll-text">Liquidity pools that stand as fortresses, resistant to exploits and reflective of collective strength.&nbsp;</p>
+          <p class="scroll-text">A legacy of memes and stories that echo across blockchains, cementing $NANANA’s place in crypto folklore.&nbsp;</p>
+            <p class="scroll-text">The 21 are not here to dictate this future—they are here to inspire it. Through AMAs, community events, and decentralized governance experiments, they will empower holders to shape $NANANA’s path. The coin’s greatness will be measured not in dollars, but in the connections it fosters and the laughter it inspires. </p>
+<div class="scroll-ornament">✦</div>
+            
+          <p class="scroll-text"><strong>The Mystery of $NANANA&nbsp;</strong></p>
+          <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; There is an allure to the unknown, a spark that ignites curiosity and fuels adventure. $NANANA embraces this mystery—not to confuse, but to captivate. The anonymity of the 21, the organic resurgence of a fallen coin, the unpredictable pulse of the community—these elements weave a narrative that is as enigmatic as it is compelling. We invite you to join this mystery, not as passive observers, but as active participants. Hold $NANANA, create a meme, contribute to a pool, or simply share a laugh. Every action, no matter how small, is a thread in the tapestry of this community-driven saga.&nbsp;</p>
+          <p class="scroll-text"><strong>Disclaimer: The Meme Coin Ethos&nbsp;</strong></p>
+          <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$NANANA is a meme coin, and with that comes inherent risks. The crypto market is volatile, and $NANANA is no exception. We make no promises of financial returns or stability. The LUSD exploit serves as a reminder that even the most vibrant ecosystems can face challenges. Participate at your own discretion, and never invest more than you can afford to lose. This whitepaper is not a contract or a guarantee—it is a manifesto of intent, a rallying cry for those who believe in the power of community. The 21 and the PulseChain community are united in their efforts, but the outcome depends on the collective will of all who join us.&nbsp;</p>
+          <p class="scroll-text"><strong>Conclusion: The Song of $NANANA&nbsp;</strong></p>
+          <p class="scroll-text">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;In the grand symphony of PulseChain, $NANANA is a playful, defiant note—a reminder that even in the face of adversity, communities can rise, create, and thrive. The 21 mysterious members have struck the first chord, but the melody belongs to you. Together, we will rebuild liquidity, spread joy, and make $NANANA great again, not through promises of wealth, but through the unbreakable spirit of 100% community action.&nbsp;</p>
+          <p class="scroll-text">Join us. Sing the song of $NANANA. Let’s make the PulseChain echo with its name.&nbsp;</p>
+          <p class="scroll-text">Note: This whitepaper is a creative expression of the $NANANA community’s vision. It reflects no official affiliation with the original token creators and is driven solely by the passion of its anonymous stewards and supporters.&nbsp;</p>
+            <p class="scroll-text">This whitepaper aims to capture the mysterious, community-driven ethos you requested while emphasizing the meme coin’s purity and the collective effort to revive it. Let me know if you’d like any tweaks or additions! </p>
+        </div>
+    </div>
+    
+    <script>
+        // Get elements
+        const scrollContainer = document.getElementById('scrollContainer');
+        const closeButton = document.getElementById('closeScroll');
+        const showScrollButton = document.getElementById('showScrollBtn');
+        
+        // Function to close the scroll
+        function closeScroll() {
+            scrollContainer.classList.add('scroll-hidden');
+            // Show the button to bring the scroll back
+            setTimeout(function() {
+                showScrollButton.style.display = 'block';
+            }, 500);
+        }
+        
+        // Function to show the scroll again
+        function showScroll() {
+            scrollContainer.classList.remove('scroll-hidden');
+            showScrollButton.style.display = 'none';
+        }
+        
+        // Add event listeners
+        closeButton.addEventListener('click', closeScroll);
+        showScrollButton.addEventListener('click', showScroll);
+        
+        // Close on ESC key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeScroll();
+            }
+        });
+        
+        // Function to load text from a file (placeholder for now)
+        function loadTextFromFile(filePath) {
+            // This is a placeholder for the functionality to load text from a file
+            // In Dreamweaver, you can replace this with server-side code or AJAX
+            
+            /* Example with AJAX (uncomment to use):
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById('scrollContent').innerHTML = this.responseText;
+                }
+            };
+            xhr.open("GET", filePath, true);
+            xhr.send();
+            */
+            
+            // For now, we'll just use the content that's already in the HTML
+            console.log("Loading text from " + filePath + " (placeholder)");
+        }
+        
+        // Example of how to load content from a file
+        // Uncomment this line and provide a file path to load content dynamically
+        // loadTextFromFile('your-text-file.txt');
+    </script>
+</body>
+</html>
